@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useMoralis } from "react-moralis";
+
 import { useState, useEffect, useContext } from "react";
 import Gallery from "../../components/gallery.js";
 import RoomCalender from "../../components/roomcalender.js";
@@ -19,7 +19,7 @@ import Loader from "../../components/loader.js";
 
 export default function addroom(props) {
 	const router = useRouter();
-	const { Moralis } = useMoralis();
+
 	const { id } = router.query;
 	const {
 		weiToEth,

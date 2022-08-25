@@ -46,13 +46,16 @@ export default function Features({ feature }) {
 
 			<div className="grid grid-cols-2">
 				{included.map((f) => (
-					<div className="flex mb-5 gap-2 text-base">
+					<div key={f.id} className="flex mb-5 gap-2 text-base">
 						{f.icon}
 						{f.id}
 					</div>
 				))}
 				{notIncluded.splice(0, 2).map((f) => (
-					<div className="flex mb-5 gap-2 text-base line-through">
+					<div
+						key={f.id}
+						className="flex mb-5 gap-2 text-base line-through"
+					>
 						{f.icon}
 						{f.id}
 					</div>

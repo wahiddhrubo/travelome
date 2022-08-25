@@ -207,6 +207,7 @@ export default function InputForm({
 			{fields.map((f) =>
 				f.inputType == "text" || f.inputType == "number" ? (
 					<div
+						key={f.id}
 						className={
 							f.fullwidth ? styles.inputDivFull : styles.inputDiv
 						}

@@ -28,7 +28,7 @@ export default function Search() {
 		<div>
 			{rooms &&
 				rooms.map((r) => (
-					<div className="my-20">
+					<div key={r.uid} className="my-20">
 						<Card
 							id={r.uid}
 							img={r.img}

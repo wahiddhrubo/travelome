@@ -30,12 +30,12 @@ export default function DefaultButton({
 					<a
 						href="#_"
 						onClick={onClick}
-						class="relative inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-[#f12711] border-2 border-[#f12711] rounded-md hover:text-white group hover:bg-gray-50"
+						className="relative inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-[#f12711] border-2 border-[#f12711] rounded-md hover:text-white group hover:bg-gray-50"
 					>
-						<span class="absolute left-0 block w-full h-0 transition-all bg-[#f12711] opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
-						<span class="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
+						<span className="absolute left-0 block w-full h-0 transition-all bg-[#f12711] opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
+						<span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
 							<svg
-								class="w-5 h-5"
+								className="w-5 h-5"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
@@ -49,7 +49,7 @@ export default function DefaultButton({
 								></path>
 							</svg>
 						</span>
-						<span class="relative">{text}</span>
+						<span className="relative">{text}</span>
 					</a>
 				</div>
 			</div>
@@ -61,11 +61,11 @@ export default function DefaultButton({
 					<a
 						href="#_"
 						onClick={onClick}
-						class="relative inline-flex items-center w-[50px] h-[50px] rounded-full overflow-hidden text-lg font-medium text-[#f12711] border-2 border-[#f12711] rounded-md hover:text-white group hover:bg-gray-50"
+						className="relative inline-flex items-center w-[50px] h-[50px] rounded-full overflow-hidden text-lg font-medium text-[#f12711] border-2 border-[#f12711] rounded-md hover:text-white group hover:bg-gray-50"
 					>
-						<span class="absolute left-0 block w-full h-0 transition-all bg-[#f12711] opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
+						<span className="absolute left-0 block w-full h-0 transition-all bg-[#f12711] opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
 
-						<span class="relative mx-auto">{text}</span>
+						<span className="relative mx-auto">{text}</span>
 					</a>
 				</div>
 			</div>
@@ -77,9 +77,9 @@ export default function DefaultButton({
 					<a
 						href="#_"
 						onClick={onClick}
-						class="relative cursor-default inline-flex items-center w-[50px] h-[50px] bg-gray-500 rounded-full overflow-hidden text-lg font-medium text-[white] border-2 rounded-md"
+						className="relative cursor-default inline-flex items-center w-[50px] h-[50px] bg-gray-500 rounded-full overflow-hidden text-lg font-medium text-[white] border-2 rounded-md"
 					>
-						<span class="relative mx-auto ">{text}</span>
+						<span className="relative mx-auto ">{text}</span>
 					</a>
 				</div>
 			</div>

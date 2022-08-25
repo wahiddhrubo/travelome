@@ -84,6 +84,7 @@ export default function User() {
 						{bookedRooms &&
 							bookedRooms.map((b) => (
 								<ShortCard
+									key={b.uid}
 									img={b.img}
 									title={b.name}
 									price={b.price}

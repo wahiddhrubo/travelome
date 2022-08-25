@@ -30,7 +30,9 @@ export default function SelectSlider({
 					className="border-black border-[1px] px-3"
 				>
 					{selectData.options.map((opt) => (
-						<MenuItem value={opt}>{opt}</MenuItem>
+						<MenuItem key={opt} value={opt}>
+							{opt}
+						</MenuItem>
 					))}
 				</Select>
 			</div>

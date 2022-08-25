@@ -126,6 +126,7 @@ export default function UserForm({
 				f.inputType == "number" ||
 				f.inputType == "email" ? (
 					<div
+						key={f.id}
 						className={
 							f.fullwidth ? styles.inputDivFull : styles.inputDiv
 						}

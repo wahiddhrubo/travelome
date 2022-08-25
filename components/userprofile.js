@@ -13,7 +13,7 @@ import { useContext } from "react";
 import { TravelHomeContext } from "../context/TravelHomeContext.js";
 import Button from "./button.js";
 
-export default function ({
+export default function UserProfile({
 	userAcc,
 	profileAcc,
 	name,
@@ -71,6 +71,7 @@ export default function ({
 						</div>
 						<div>
 							<Image
+								alt=""
 								src={profileImg}
 								className={styles.img}
 								height={250}
