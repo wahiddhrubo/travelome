@@ -1,0 +1,105 @@
+/*// Will edit everything selected including everything between a range of dates*/
+.CalendarDay__selected_span {
+  background: #82e0aa;
+  color: white;
+  border: 1px solid;
+}
+
+/*// Will edit selected date or the endpoints of a range of dates*/
+.CalendarDay__selected {
+  background: red;
+  color: white;
+}
+
+/*// Will edit when hovered over. _span style also has this property*/
+.CalendarDay__selected:hover {
+  background: orange;
+  color: white;
+}
+/*
+// Will edit when the second date (end date) in a range of dates
+// is not yet selected. Edits the dates between your mouse and said date*/
+.CalendarDay__hovered_span:hover {
+  background: black;
+}
+.CalendarDay__hovered_span {
+  background: #ff9589;
+  color: white;
+  border: none;
+}
+
+.CalendarDay__default {
+  border-width: 0px;
+}
+
+.CalendarDay__default:hover {
+  background: #f12711;
+  color: white;
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight {
+  display: none;
+}
+
+.CalendarDay__selected,
+.CalendarDay__selected:active {
+  background: #f12711;
+}
+
+.CalendarDay__selected_span {
+  background: #ff9589;
+}
+
+.CalendarDay__selected_start {
+  border-radius: 100% 0px 0px 100%;
+}
+
+.CalendarDay__selected_end {
+  border-radius: 0 50px 50px 0;
+}
+.DateRangePickerInput {
+  border: 0px;
+}
+.DateInput_input__focus {
+  border-color: #f12711;
+}
+.CalendarDay__blocked_calendar {
+  background: #fff;
+  color: #cacccd;
+}
+
+/*REACT DATEPICKER*/
+.react-datepicker__input-container {
+  padding: 10px;
+  border-color: black;
+  border-width: 0px;
+  border-bottom-width: 2px;
+  outline: none;
+}
+
+.react-datepicker__input-container:focus {
+  outline: none !important;
+}
+.react-datepicker-wrapper input[type="text"] {
+  border: none;
+}
+
+.react-datepicker__day--in-selecting-range {
+  background: #ff9589 !important ;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected {
+  background: #f12711 !important;
+  color: white !important;
+}
+
+.react-datepicker__header {
+  background: white;
+  border-bottom: 2px solid black;
+}
+
+.react-datepicker__day {
+  border-radius: 2px;
+}

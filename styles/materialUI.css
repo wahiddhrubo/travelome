@@ -1,0 +1,30 @@
+.label.mui-selected: {
+	color: green;
+}
+.label: {
+	color: black;
+	text-transform: capitalize;
+}
+.MuiInput-underline {
+	border-color: green;
+}
+
+.muimenuitem-root: {
+	border-color: black;
+	border-radius: 6px;
+	border-width: 0px;
+	border-bottom-width: 2px;
+	color: black;
+}
+fieldset:hover {
+	border-color: #f12711;
+}
+.mui-focused fieldset: {
+	border-color: green;
+}
+
+.MuiOutlinedInput-input > fieldset {
+	border: 0px;
+	border-bottom-width: 2px;
+	border-color: black;
+}
