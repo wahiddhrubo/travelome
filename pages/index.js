@@ -106,7 +106,7 @@ export default function Home() {
         <div>
           <Header divs={headerRm} />
           {selectData.map((dta) => (
-            <div className="my-[200px]">
+            <div key={dta.label} className="my-[200px]">
               <SliderDiv
                 roomsData={dta.roomsData}
                 sortBy={dta.sortBy}

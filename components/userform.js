@@ -158,7 +158,7 @@ export default function UserForm({
 						</FormHelperText>
 					</div>
 				) : (
-					<div className={styles.inputDiv}>
+					<div key={f.id} className={styles.inputDiv}>
 						<FormControl
 							variant="standard"
 							className={styles.input}

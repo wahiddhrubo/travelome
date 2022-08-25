@@ -17,7 +17,7 @@ import { owner, primaryColor } from "../../lib/constants.js";
 import { checkEmptyField } from "../../components/formvalidation.js";
 import Loader from "../../components/loader.js";
 
-export default function addroom(props) {
+export default function Addroom(props) {
 	const router = useRouter();
 
 	const { id } = router.query;
