@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMoralis } from "react-moralis";
 import { useEffect, useState, useContext } from "react";
@@ -64,6 +65,14 @@ export default function User() {
 			) : user ? (
 				<>
 					<div>
+						<Head>
+							<title>{user.nickname}</title>
+							<meta
+								name="description"
+								content="User Description"
+							/>
+							<link rel="icon" href="/favicon.ico" />
+						</Head>
 						<UserProfile
 							userAcc={currentAccount}
 							profileAcc={user.ethAddress}

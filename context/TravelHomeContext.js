@@ -121,6 +121,7 @@ export function TravelHomeContextProvider({ children }) {
 			return false;
 		}
 	};
+
 	const sortRoomByPrice = async () => {
 		await Moralis.start({
 			serverUrl: process.env.NEXT_PUBLIC_MORALIS_SERVER,
@@ -274,6 +275,27 @@ export function TravelHomeContextProvider({ children }) {
 			return false;
 		}
 	};
+	const fetchUserByAcc = async (addr) => {
+		console.log(addr);
+		if (addr) {
+			await Moralis.start({
+				serverUrl: process.env.NEXT_PUBLIC_MORALIS_SERVER,
+				appId: process.env.NEXT_PUBLIC_APP_ID,
+			});
+			const results = Moralis.Object.extend("_User");
+			const query = new Moralis.Query(results);
+			query.equalTo("ethAddress", addr.toString);
+			const result = await query.find();
+			if (result.length === 0) {
+				console.log(result);
+				return result;
+			}
+			const userDetails = JSON.parse(JSON.stringify(result))[0];
+			return userDetails;
+		} else {
+			return false;
+		}
+	};
 
 	const fetchUser = async (id) => {
 		if (id) {
@@ -283,6 +305,26 @@ export function TravelHomeContextProvider({ children }) {
 			});
 			const newUser = await Moralis.Cloud.run("getUser", {
 				username: id,
+			});
+			if (newUser.length === 0) {
+				console.log(newUser);
+				return newUser;
+			}
+			const userDetails = JSON.parse(JSON.stringify(newUser))[0];
+			return userDetails;
+		} else {
+			return false;
+		}
+	};
+	const getUserByAcc = async (addr) => {
+		if (addr) {
+			console.log(addr);
+			await Moralis.start({
+				serverUrl: process.env.NEXT_PUBLIC_MORALIS_SERVER,
+				appId: process.env.NEXT_PUBLIC_APP_ID,
+			});
+			const newUser = await Moralis.Cloud.run("getUserByAcc", {
+				ethAddress: addr.toString(),
 			});
 			if (newUser.length === 0) {
 				console.log(newUser);
@@ -611,6 +653,8 @@ export function TravelHomeContextProvider({ children }) {
 				completed,
 				sortRoomByPrice,
 				fetchingFeaturedRooms,
+				fetchUserByAcc,
+				getUserByAcc,
 			}}
 		>
 			{children}

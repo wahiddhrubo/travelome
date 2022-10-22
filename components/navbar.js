@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 import Image from "next/image";
 import { TravelHomeContext } from "../context/TravelHomeContext.js";
 import Link from "next/link";
@@ -7,6 +7,7 @@ import Button from "./button.js";
 import DropDown from "./dropdown.js";
 import SearchBar from "./searchbar.js";
 import { primaryColor } from "../lib/constants.js";
+import SearchDiv from "./searchpopup.js";
 
 export default function NavBar() {
 	const styles = {
@@ -36,34 +37,43 @@ export default function NavBar() {
 		}
 	};
 	return (
-		<div className={styles.wrapper}>
-			<Link href="/">
-				<div className={styles.logo}>
-					<Image
-						src={logo}
-						alt="Travel Home"
-						height={80}
-						width={120}
-					/>
+		<div className="mt-[50px]">
+			<div className="hidden lg:block">
+				<div className={styles.wrapper}>
+					<Link href="/">
+						<div className={styles.logo}>
+							<Image
+								src={logo}
+								alt="Travel Home"
+								height={80}
+								width={120}
+							/>
+						</div>
+					</Link>
+					<div className="m-auto">
+						<SearchBar />
+					</div>
+					{isAuthenticated ? (
+						<div className={styles.dropDown}>
+							<DropDown />
+						</div>
+					) : (
+						<Button
+							onClick={connectWalletHandler}
+							color={primaryColor}
+							text="Login"
+							type="DefaultButton"
+						/>
+					)}
+					{console.log(isAuthenticated)}
+					<div className={styles.menu}></div>
 				</div>
-			</Link>
-			<div className="m-auto">
-				<SearchBar />
 			</div>
-			{isAuthenticated ? (
-				<div className={styles.dropDown}>
-					<DropDown />
+			<div className="lg:hidden w-[300px]">
+				<div className="m-auto">
+					<SearchDiv />
 				</div>
-			) : (
-				<Button
-					onClick={connectWalletHandler}
-					color={primaryColor}
-					text="Login"
-					type="DefaultButton"
-				/>
-			)}
-			{console.log(isAuthenticated)}
-			<div className={styles.menu}></div>
+			</div>
 		</div>
 	);
 }

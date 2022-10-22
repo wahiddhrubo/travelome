@@ -3,7 +3,7 @@ import { FiCamera } from "react-icons/fi";
 import Dropzone from "./dropzone.js";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import storage from "../firebase/firebase.js";
+import storage from "../Firebase/firebase.js";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function ImageUpload({ img, setImg, errors }) {

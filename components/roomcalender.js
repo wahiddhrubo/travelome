@@ -15,7 +15,7 @@ export default function RoomCalender({ dates, setDates, isDayBlocked }) {
 		setFocusedInput(focusedInput);
 	};
 	return (
-		<div className="text-center text-lg text-semibold">
+		<div className="text-center hidden lg:block text-lg text-semibold">
 			<DayPickerRangeController
 				startDate={dates.startDate}
 				endDate={dates.endDate}

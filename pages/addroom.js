@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React, { useState, useContext } from "react";
 import InputForm from "../components/inputForm.js";
 import SubmitButton from "../components/button.js";
@@ -71,11 +72,16 @@ export default function AddRoom() {
 
     return (
         <div>
+            <Head>
+                <title>Add Room</title>
+                <meta name="description" content="Add A New Room" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <div className="text-center text-2xl font-semibold m-5">
                 Add A New Room
             </div>
             <div className="text-center text-lg text-em font-normal text-[#f12711]">
-                Remember You Can't Change The Room Details Later!!!
+                Remember You Can&apos;t Change The Room Details Later!!!
             </div>
             <InputForm
                 name={name}

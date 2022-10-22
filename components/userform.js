@@ -158,8 +158,9 @@ export default function UserForm({
 						</FormHelperText>
 					</div>
 				) : (
-					<div key={f.id} className={styles.inputDiv}>
+					<div key={f.inputId} className={styles.inputDiv}>
 						<FormControl
+							key={f.inputId}
 							variant="standard"
 							className={styles.input}
 						>
@@ -173,6 +174,7 @@ export default function UserForm({
 								{f.label}
 							</InputLabel>
 							<CustomSelect
+								key={f.inputId}
 								id={f.inputId}
 								value={f.inputId}
 								onChange={f.changeHandler}
@@ -185,7 +187,9 @@ export default function UserForm({
 								}
 							>
 								{f.options.map((opt) => (
-									<MenuItem value={opt}>{opt}</MenuItem>
+									<MenuItem key={opt} value={opt}>
+										{opt}
+									</MenuItem>
 								))}
 							</CustomSelect>
 							<FormHelperText

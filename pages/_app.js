@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import "../styles/materialUI.css";
 import { TravelHomeContextProvider } from "../context/TravelHomeContext.js";
 import NavBar from "../components/navbar.js";
+import Footer from "../components/footer.js";
 import { NotificationProvider } from "web3uikit";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -22,9 +23,12 @@ function MyApp({ Component, pageProps }) {
     >
       <TravelHomeContextProvider>
         <Toaster />
-        <div className="block w-[1180px] px-6 mx-auto">
-          <NavBar />
-          <Component {...pageProps} />
+        <div className=" overflow-x-hidden">
+          <div className="block lg:w-[1180px] md:w-[580px] w-[400px] px-6 mx-auto">
+            <NavBar />
+            <Component {...pageProps} />
+          </div>
+          <Footer />
         </div>
       </TravelHomeContextProvider>
     </MoralisProvider>

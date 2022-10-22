@@ -213,7 +213,6 @@ export default function InputForm({
 						}
 					>
 						<textarea
-							key={f.id}
 							className={
 								errors.includes(f.id)
 									? styles.error + styles.input
@@ -239,7 +238,7 @@ export default function InputForm({
 						</FormHelperText>
 					</div>
 				) : (
-					<div className={styles.inputDiv}>
+					<div key={f.id} className={styles.inputDiv}>
 						<FormControl
 							variant="standard"
 							className={styles.inputselect}
@@ -266,7 +265,9 @@ export default function InputForm({
 								}
 							>
 								{f.options.map((opt) => (
-									<MenuItem value={opt}>{opt}</MenuItem>
+									<MenuItem key={opt} value={opt}>
+										{opt}
+									</MenuItem>
 								))}
 							</CustomSelect>
 							<FormHelperText

@@ -19,8 +19,10 @@ export default function SelectSlider({
 	};
 	return (
 		<div className="">
-			<h1 className="mt-[100px] text-2xl font-semibold">Rooms {label}</h1>
-			<div className="text-right ml-auto">
+			<h1 className="mt-[100px] text-2xl text-center lg:text-left leading-7 font-semibold">
+				Rooms {label}
+			</h1>
+			<div className="lg:text-right text-center mx-auto my-5 lg:my-0 lg:ml-auto">
 				<Select
 					IconComponent={SortIcon}
 					id={selectData.inputId}

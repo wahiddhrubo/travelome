@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMoralis } from "react-moralis";
 import { useContext, useEffect, useState } from "react";
@@ -59,9 +60,14 @@ export default function User() {
 	if (isAuthenticated) {
 		return (
 			<>
+				<Head>
+					<title>Complete Profile</title>
+					<meta name="description" content="Complete Your Profile" />
+					<link rel="icon" href="/favicon.ico" />
+				</Head>
 				{completed ? (
 					<div
-						className={`text-center align-middle h-[calc(100vw-300px)] w-screen text-center text-lg font-semibold text-[${primaryColor}]`}
+						className={`text-center align-middle h-[calc(100vh-150px)] w-screen text-center text-lg font-semibold text-[${primaryColor}]`}
 					>
 						{" "}
 						<div className=" relative top-1/2 my-auto">
@@ -74,7 +80,7 @@ export default function User() {
 							Complete User Profile
 						</div>
 						<div className="text-center text-lg font-normal text-[#f12711]">
-							Remember You Can't Change The Profile Later!!!
+							Remember You Can&apost Change The Profile Later!!!
 						</div>
 						<UserForm
 							nickname={nickname}

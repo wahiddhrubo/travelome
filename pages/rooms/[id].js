@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import { useState, useEffect, useContext } from "react";
 import Gallery from "../../components/gallery.js";
@@ -8,7 +9,7 @@ import BookingForm from "../../components/bookform.js";
 import Title from "../../components/title.js";
 import Prices from "../../components/prices.js";
 import NotFound from "../../components/notfound.js";
-import MapComp from "../../components/map.js";
+import UserBio from "../../components/userBio.js";
 import HashLoader from "react-spinners/HashLoader";
 import SubmitButton from "../../components/button.js";
 import moment from "moment";
@@ -27,10 +28,13 @@ export default function Addroom(props) {
 		BookRoom,
 		fetchingRoom,
 		fetchBlockedDates,
+		fetchUserByAcc,
+		getUserByAcc,
 	} = useContext(TravelHomeContext);
 	const [blockedDates, setBlockedDates] = useState();
 	const [dates, setDates] = useState({ startDate: null, endDate: null });
 	const [room, setRoom] = useState([]);
+
 	const [startDate, setStartDate] = useState("");
 	const [endDate, setEndDate] = useState("");
 	const [error, setError] = useState("");
@@ -65,7 +69,7 @@ export default function Addroom(props) {
 		if (checkEmptyField(fields)) {
 			const errorField = checkEmptyField(fields);
 			setError(`ERROR : Please Enter ${errorField.join(" ")}`);
-		} else if (numOfGuest <= maxGuest) {
+		} else if (numOfGuest >= maxGuest) {
 			setError("ERROR : Max Number Of Guest Exceed");
 		} else {
 			setLoading(true);
@@ -89,10 +93,10 @@ export default function Addroom(props) {
 		const fetchRoom = async () => {
 			if (fetchingRoom(id)) {
 				setLoading(true);
-
 				const newRomm = await fetchingRoom(id);
-				console.log(newRomm);
+
 				setRoom(newRomm);
+
 				setLoading(false);
 			}
 		};
@@ -142,25 +146,81 @@ export default function Addroom(props) {
 				<Loader />
 			) : room.length >= 1 ? (
 				room.map((r) => (
-					<div key={r.name}>
-						<div
-							key={r.name}
-							className="text-2xl mt-20 font-semibold"
-						>
+					<div key={r.uid}>
+						<Head>
+							<title>{r.name}</title>
+							<meta
+								name="description"
+								content="Room Description"
+							/>
+							<link rel="icon" href="/favicon.ico" />
+						</Head>
+						<div className="text-2xl mt-20 font-semibold">
 							{r.name}
 						</div>
-						<div
-							key={r.name}
-							className="font-medium underline mt-2 mb-2"
-						>
+						<div className="font-medium underline mt-2 mb-2">
 							{r.location}
 						</div>
-						<div className="my-10">
+						<div className="my-10 ">
 							<Gallery images={r.img} />
 						</div>
 
-						<div key={r.name} className="flex shink gap-10">
-							<div key={r.name} className="w-3/4 pr-5 ">
+						<div className="lg:flex hidden shink gap-10">
+							<div className="lg:w-3/4 text-center lg:text-left pr-5 ">
+								<Title
+									placeType={r.placeType}
+									price={r.price}
+									bedbath={r.bedbath}
+									description={r.description}
+									maxGuests={parseInt(r.maxNumOfPeople)}
+								/>
+								<div className="my-10">
+									<Features feature={r.features} />
+								</div>
+
+								<RoomCalender
+									dates={dates}
+									setDates={setDates}
+									isDayBlocked={isBlocked}
+								/>
+							</div>
+							<div className="sticky top-[10px] w-[385px] text-center mb-auto">
+								<BookingForm
+									maxNumOfPeople={parseInt(r.maxNumOfPeople)}
+									dates={dates}
+									setDates={setDates}
+									isDayBlocked={isBlocked}
+									roomPriceByNumOfDay={roomPriceByNumOfDay}
+									transactionFee={transactionFee}
+									setNumOfGuest={setNumOfGuest}
+									numOfGuest={numOfGuest}
+								/>
+								{roomPriceByNumOfDay ? (
+									<Prices
+										roomPriceByNumOfDay={
+											roomPriceByNumOfDay
+										}
+										transactionFee={transactionFee}
+										totalPrice={totalPrice}
+										account={currentAccount}
+									/>
+								) : (
+									""
+								)}
+								<div className="text-red-600 text-lg font-semibold my-3">
+									{error ? error : ""}
+								</div>
+
+								<SubmitButton
+									className=" my-5"
+									type="SubmitButton"
+									onClick={SubmitHandler}
+									text="Book Now"
+								/>
+							</div>
+						</div>
+						<div className=" lg:hidden">
+							<div className="w-full text-center px-2 ">
 								<Title
 									placeType={r.placeType}
 									price={r.price}
@@ -177,10 +237,7 @@ export default function Addroom(props) {
 									isDayBlocked={isBlocked}
 								/>
 							</div>
-							<div
-								key={r.name}
-								className="sticky w-[385px] text-center mb-auto"
-							>
+							<div className=" w-[325px]  text-center mb-8">
 								<BookingForm
 									maxNumOfPeople={parseInt(r.maxNumOfPeople)}
 									dates={dates}

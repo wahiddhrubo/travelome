@@ -23,11 +23,11 @@ export default function Header({ img, id, title, price, description }) {
 				className="relative w-full"
 			/>
 */}
-			<div className=" relative top-1/4 w-[1180px] m-[auto]  ">
+			<div className=" relative top-1/4 lg:w-[1180px] text-center lg:text-left m-[auto]  ">
 				{title}
 
 				<div
-					className={` bg-white border-[${primaryColor}] border-[1px] py-2 rounded-md w-[150px] text-center text-sm text-[${primaryColor}] my-2`}
+					className={` mx-auto lg:mx-0 lg:mr-auto bg-white border-[${primaryColor}] border-[1px] py-2 rounded-md w-[150px] text-center text-sm text-[${primaryColor}] my-2`}
 				>
 					{price} Matic
 					<span className="text-black text-xs font-black">
@@ -36,12 +36,12 @@ export default function Header({ img, id, title, price, description }) {
 					</span>
 				</div>
 
-				<div className="text-base font-normal !w-[800px] ">
+				<div className="lg:text-base text-center lg:text-left text-sm font-normal lg:!w-[800px] ">
 					{description.slice(0, 150)}
 					{description.length > 150 ? "..." : ""}
 				</div>
 				<Link href={`/rooms/${id}`}>
-					<div className="w-[175px] h-[40px] !text-lg">
+					<div className="lg:w-[175px] h-[40px] !text-lg">
 						<Button
 							type="DefaultButton"
 							text="See Room"

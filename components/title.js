@@ -40,19 +40,21 @@ export default function Title({
 
 	const styles = {
 		name: "text-black font-semibold text-xl mb-3",
-		price: `flex  text-[${primaryColor}] font-semibold text-md gap-1 my-2`,
+		price: `flex w-[150px] lg:w-full mx-auto text-[${primaryColor}] font-semibold text-md gap-1 my-2`,
 		prcspan: `inline  text-[${primaryColor}] font-semibold text-sm my-auto`,
-		bedbath: "flex  text-black font-md text-md gap-1",
-		description: "my-5 pr-20 leading-7",
-		iconWrapper: "flex gap-20",
-		icon: " p-5 border-2 border-black w-[150px] text-lg font-semibold",
+		bedbath:
+			"flex w-[220px] lg:w-full mx-auto  text-black font-md text-md gap-1",
+		description: "my-5 lg:pr-20 leading-7",
+		iconWrapper: "flex lg:gap-20 gap-10",
+		icon: " p-5 border-2 border-black w-[150px]  lg:text-lg font-semibold text-left",
 		iconDescription: "text-sm font-md my-1",
-		divider: "border-[#ffd6d1] my-20 border-0 w-2/3 border-b-[2px]",
+		divider:
+			"border-[#ffd6d1] my-20 border-0 w-2/3 text-center border-b-[2px]",
 		readMore: "font-semibold cursor-pointer",
 	};
 
 	return (
-		<div className="my-5">
+		<div className="lg:my-5">
 			<div className={styles.name}>
 				{!placeType.includes("Hotel")
 					? `${name} ${placeType[2]} in ${placeType[0]}`

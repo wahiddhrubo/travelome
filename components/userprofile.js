@@ -39,86 +39,80 @@ export default function UserProfile({
 	};
 	return (
 		<div>
-			{userView ? (
-				<div>
-					<div className="flex shrink">
-						<div className="w-3/4 my-auto">
-							<div className={styles.name}>
-								{userView && "Hello,"}
-								{!userView && "Hi, I'm"} {name}
-							</div>
-							<div className={styles.joined}>
-								Joined in {joinedDate}
-							</div>
-							<div className={styles.secondary}>
-								{verified ? (
-									<div>
-										<MdOutlineVerifiedUser
-											className="inline text-green-400 mr-2"
-											size={35}
-										/>
-										Indentity Verified
+			<div>
+				<div className="flex shrink">
+					<div className="w-3/4 my-auto">
+						<div className={styles.name}>
+							{userView && "Hello,"}
+							{!userView && "Hi, I'm"} {name}
+						</div>
+						<div className={styles.joined}>
+							Joined in {joinedDate}
+						</div>
+						<div className={styles.secondary}>
+							{verified ? (
+								<div>
+									<MdOutlineVerifiedUser
+										className="inline text-green-400 mr-2"
+										size={35}
+									/>
+									Indentity Verified
+									{userView && (
 										<Button
 											type="DefaultButton"
 											text="Withdraw Balance"
 											className="my-10"
 										/>
-									</div>
-								) : (
-									""
-								)}
-							</div>
-						</div>
-						<div>
-							<Image
-								alt=""
-								src={profileImg}
-								className={styles.img}
-								height={250}
-								width={250}
-							/>
+									)}
+								</div>
+							) : (
+								""
+							)}
 						</div>
 					</div>
-					<hr className={styles.divider} />
-					<div className={styles.header}>
-						About
-						<div className={styles.desciption}>{details}</div>
+					<div>
+						<Image
+							alt=""
+							src={profileImg}
+							className={styles.img}
+							height={250}
+							width={250}
+						/>
 					</div>
-
-					<hr className={styles.divider} />
-					<div className={styles.secondary}>
-						<AiOutlineHome className={styles.icon} size={25} />{" "}
-						Lives in {location}
-					</div>
-					<div className={styles.secondary}>
-						<BiMessageAlt className={styles.icon} size={25} />{" "}
-						Speaks {languages.join(", ")}
-					</div>
-					<div className={styles.secondary}>
-						<MdWorkOutline className={styles.icon} size={25} />{" "}
-						Works as {work}
-					</div>
-
-					<hr className={styles.divider} />
-					<div className={styles.header}>
-						Contact {name}
-						<div className={styles.secondary}>
-							<MdAlternateEmail
-								className={styles.icon}
-								size={25}
-							/>{" "}
-							Email
-						</div>
-						<div className={styles.secondary}>
-							<MdSmartphone className={styles.icon} size={25} />{" "}
-							Phone
-						</div>
-					</div>
-					<hr className={styles.divider} />
 				</div>
-			) : (
-				""
-			)}
+				<hr className={styles.divider} />
+				<div className={styles.header}>
+					About
+					<div className={styles.desciption}>{details}</div>
+				</div>
+
+				<hr className={styles.divider} />
+				<div className={styles.secondary}>
+					<AiOutlineHome className={styles.icon} size={25} /> Lives in{" "}
+					{location}
+				</div>
+				<div className={styles.secondary}>
+					<BiMessageAlt className={styles.icon} size={25} /> Speaks{" "}
+					{languages.join(", ")}
+				</div>
+				<div className={styles.secondary}>
+					<MdWorkOutline className={styles.icon} size={25} /> Works as{" "}
+					{work}
+				</div>
+
+				<hr className={styles.divider} />
+				<div className={styles.header}>
+					Contact {name}
+					<div className={styles.secondary}>
+						<MdAlternateEmail className={styles.icon} size={25} />{" "}
+						Email
+					</div>
+					<div className={styles.secondary}>
+						<MdSmartphone className={styles.icon} size={25} /> Phone
+					</div>
+				</div>
+				<hr className={styles.divider} />
+			</div>
 		</div>
 	);
 }

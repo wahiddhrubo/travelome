@@ -1,17 +1,22 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { useState, useContext, useEffect } from "react";
 import { TravelHomeContext } from "../../context/TravelHomeContext.js";
 import Card from "../../components/cardlong.js";
+import Loader from "../../components/loader.js";
 
 export default function Search() {
 	const router = useRouter();
 	const { dates, numOfGuests } = router.query;
 	const { fetchRoomsByBlockedDates, fetchRoomsByGuestNumber, weiToEth } =
 		useContext(TravelHomeContext);
+	const [loading, setLoading] = useState(true);
 	const [rooms, setRooms] = useState();
 	useEffect(() => {
 		const getRooms = async () => {
 			if (dates && numOfGuests) {
+				setLoading(true);
+
 				const roomsByGuest = await fetchRoomsByGuestNumber(numOfGuests);
 				const blockedIds = await fetchRoomsByBlockedDates(dates);
 				const fetchedRooms = roomsByGuest.filter((r) => {
@@ -19,6 +24,7 @@ export default function Search() {
 				});
 				setRooms(fetchedRooms);
 				console.log(roomsByGuest, blockedIds, rooms);
+				setLoading(false);
 			}
 		};
 		getRooms();
@@ -26,7 +32,14 @@ export default function Search() {
 
 	return (
 		<div>
-			{rooms &&
+			<Head>
+				<title>Search</title>
+				<meta name="description" content="Search Result" />
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+			{loading ? (
+				<Loader />
+			) : rooms ? (
 				rooms.map((r) => (
 					<div key={r.uid} className="my-20">
 						<Card
@@ -38,7 +51,10 @@ export default function Search() {
 							description={r.description}
 						/>
 					</div>
-				))}
+				))
+			) : (
+				""
+			)}
 		</div>
 	);
 }

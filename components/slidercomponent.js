@@ -8,7 +8,7 @@ export default function SliderComponent({ divs }) {
   const { weiToEth } = useContext(TravelHomeContext);
   const styles = {
     icondiv:
-      "transition-all ease-in h-[50px]  w-[50px] cursor-pointer hover:!bg-black hover:!text-white text-black my-5 rounded-full border-[2px] border-black",
+      "transition-all my-10 ease-in h-[50px]  w-[50px] cursor-pointer hover:!bg-black hover:!text-white text-black my-5 rounded-full border-[2px] border-black",
     icons:
       " slick-arrow !left-[0px] top-[20%]   !relative  m-auto   !h-[30px] !w-[30px]",
   };
@@ -50,6 +50,32 @@ export default function SliderComponent({ divs }) {
     slidesToScroll: 3,
     prevArrow: <SlickArrowLeft />,
     nextArrow: <SlickArrowRight />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   return (
     <div>

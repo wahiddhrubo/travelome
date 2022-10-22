@@ -74,9 +74,9 @@ export default function SearchBar({}) {
 	}, [startDate, endDate, numOfGuests]);
 
 	return (
-		<div className="flex w-[700px] gap-5">
+		<div className="flex text-sm lg:w-[700px] w-[380px] gap-5">
 			<div>
-				<label>
+				<label className=" lg:w-[10%] w-[20%] ">
 					Number Of Guests
 					<input
 						type="number"
@@ -86,7 +86,7 @@ export default function SearchBar({}) {
 					/>
 				</label>
 			</div>
-			<label>
+			<label className=" lg:w-[40%] w-[30%] ">
 				Arrival Date
 				<DatePicker
 					selected={startDate}
@@ -100,7 +100,7 @@ export default function SearchBar({}) {
 					minDate={new Date()}
 				/>
 			</label>
-			<label>
+			<label className=" lg:w-[40%] w-[30%] ">
 				Departure Date
 				<DatePicker
 					selected={endDate}
