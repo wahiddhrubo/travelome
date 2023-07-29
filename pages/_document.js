@@ -5,10 +5,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Sora&display=optional"
-            rel="stylesheet"
-          />
           <title>Travel Home</title>
         </Head>
         <body>

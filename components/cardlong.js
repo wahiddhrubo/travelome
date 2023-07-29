@@ -32,17 +32,11 @@ export default function RoomCard({
               <div>
                 <CardContent>
                   <div className="h-[60px] my-3">
-                    <h3
-                      gutterBottom
-                      className="capitalize text-black  my-auto text-xl font-semibold "
-                      component="div"
-                    >
+                    <h3 className="capitalize text-black  my-auto text-xl font-semibold ">
                       {title.toLowerCase()}
                     </h3>
                     <h3
-                      gutterBottom
                       className={`capitalize  font-normal my-auto text-[${primaryColor}] `}
-                      component="div"
                     >
                       {location.toLowerCase()}
                     </h3>
