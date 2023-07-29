@@ -3,30 +3,19 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState, useEffect, useContext } from "react";
 import { primaryColor } from "../../../lib/constants.js";
-import { TravelHomeContext } from "../../../context/TravelHomeContext.js";
 import Card from "../../../components/cardlong.js";
 import Loader from "../../../components/loader.js";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_ROOMS } from "../../../store/saga/actions.js";
+import { getRooms } from "../../../store/selectors.js";
 
 export default function Categories() {
   const router = useRouter();
   const { id } = router.query;
-  const {
-    fetchingRoomByLocationOrType,
-    sortRoomByPrice,
-    fetchingFeaturedRooms,
-    weiToEth,
-  } = useContext(TravelHomeContext);
-  const [loading, setLoading] = useState(true);
-  const [rooms, setRooms] = useState();
+  const dispatch = useDispatch();
+  const { roomsByLoc: rooms, loading } = useSelector(getRooms);
   useEffect(() => {
-    const getRooms = async () => {
-      setLoading(true);
-      const locRooms = await fetchingRoomByLocationOrType(id);
-      setRooms(locRooms);
-      setLoading(false);
-      console.log(locRooms);
-    };
-    getRooms();
+    dispatch({ type: GET_ROOMS, location: id });
   }, [id]);
   return (
     <div>
@@ -44,7 +33,7 @@ export default function Categories() {
               id={r.id}
               img={r.img}
               title={r.name}
-              price={weiToEth(r.price)}
+              price={r.price}
               location={r.location}
               description={r.description}
             />
