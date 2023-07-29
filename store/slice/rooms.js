@@ -22,9 +22,12 @@ const roomSlice = createSlice({
     roomsError: (state, action) => {
       state.loading = false;
     },
+    addRoomSuccess: (state, action) => {
+      state.loading = false;
+    },
   },
 });
 
-export const { weiToEth, roomLoader, roomSucess, roomsError } =
+export const { weiToEth, roomLoader, roomSucess, roomsError, addRoomSuccess } =
   roomSlice.actions;
 export default roomSlice.reducer;

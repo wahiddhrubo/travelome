@@ -1,7 +1,12 @@
 import { put, call } from "redux-saga/effects";
 import contactAbi from "../../../lib/TravelHomeAbi.json";
 import Web3 from "web3";
-import { roomSucess, roomsError } from "../../slice/rooms";
+import {
+  addRoomSuccess,
+  roomLoader,
+  roomSucess,
+  roomsError,
+} from "../../slice/rooms";
 import { AddReaction } from "@mui/icons-material";
 import { singleRoomLoading, singleRoomSucess } from "../../slice/singleRoom";
 
@@ -93,5 +98,60 @@ export function* fetchSingleRoom(action) {
   } catch (error) {
     console.log(error);
     yield put(roomsError(error));
+  }
+}
+
+export function* addRoom(action) {
+  const {
+    name,
+    description,
+    location,
+    img,
+    maxNumOfPeople,
+    features,
+    latitude,
+    longitude,
+    bed,
+    bath,
+    city,
+    placeType: roomType,
+    propertyType,
+    price,
+  } = action;
+  yield put(roomLoader());
+
+  window.ethereum.enable();
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(contactAbi, contractAddress);
+
+  const functionName = "addRoom";
+  const { account: address } = yield select(getUser);
+  const latlong = [latitude, longitude];
+  const bedbath = [bed, bath];
+  const placeType = [city, roomType, propertyType];
+  const totalPrice = web3.utils.fromWei(price, "wei");
+  if (address[0]) {
+    try {
+      const transactionObject = contract.methods[functionName](
+        name,
+        description,
+        location,
+        img,
+        latlong,
+        bedbath,
+        placeType,
+        totalPrice,
+        maxNumOfPeople,
+        features
+      );
+      const receipt = yield transactionObject.send({
+        from: address[0],
+      });
+
+      yield put(addRoomSuccess(receipt));
+    } catch (err) {
+      console.log(err);
+      yield put(bookingError(err));
+    }
   }
 }

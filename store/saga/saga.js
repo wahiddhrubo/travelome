@@ -1,5 +1,6 @@
 import { takeLatest } from "redux-saga/effects";
 import {
+  ADD_ROOM,
   BOOK_ROOM,
   CONNECT_WALLET,
   GET_ROOMS,
@@ -7,7 +8,7 @@ import {
   LOGIN,
 } from "./actions";
 import { connectWallet, loadUser } from "./handlers/user";
-import { fetchRooms, fetchSingleRoom } from "./handlers/rooms";
+import { addRoom, fetchRooms, fetchSingleRoom } from "./handlers/rooms";
 import { bookRoom } from "./handlers/booking";
 
 export default function* rootSaga() {
@@ -16,4 +17,5 @@ export default function* rootSaga() {
   yield takeLatest(LOGIN, loadUser);
   yield takeLatest(BOOK_ROOM, bookRoom);
   yield takeLatest(GET_SINGLE_ROOMS, fetchSingleRoom);
+  yield takeLatest(ADD_ROOM, addRoom);
 }

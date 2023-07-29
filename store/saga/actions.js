@@ -6,3 +6,4 @@ export const GET_SINGLE_ROOMS = "GET_SINGLE_ROOMS";
 export const LOGIN = "LOGIN";
 
 export const BOOK_ROOM = "BOOK_ROOM";
+export const ADD_ROOM = "ADD_ROOM";
