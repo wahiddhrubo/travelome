@@ -7,60 +7,26 @@ import { TravelHomeContext } from "../context/TravelHomeContext.js";
 import SliderDiv from "../components/selectSlider.js";
 import Loader from "../components/loader.js";
 import Header from "../components/header.js";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_ROOMS } from "../store/saga/actions";
+import { getRooms } from "../store/selectors";
 
 export default function Home() {
-  const {
-    fetchingRoomByLocationOrType,
-    sortRoomByPrice,
-    fetchingFeaturedRooms,
-  } = useContext(TravelHomeContext);
-  const [roomsByPlaceType, setRoomsByPlaceType] = useState();
+  const dispatch = useDispatch();
   const [placeType, setPlaceType] = useState("Entire place");
-  const [roomsByPropertyType, setRoomsByPropertyType] = useState();
   const [propertyType, setPropertyType] = useState("Apartment");
-  const [roomsByLoc, setRoomsByLoc] = useState();
   const [loc, setLoc] = useState("Southern Asia");
-  const [headerRm, setHeaderRm] = useState();
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const getRooms = async () => {
-      setLoading(true);
-      const propertyRooms = await fetchingRoomByLocationOrType(propertyType);
-      setRoomsByPropertyType(propertyRooms);
-      setLoading(false);
-      console.log(propertyRooms);
-    };
-    getRooms();
-  }, [propertyType]);
+  const {
+    featuredRooms,
+    loading,
+    roomsByPlaceType,
+    roomsByPropertyType,
+    roomsByLoc,
+  } = useSelector(getRooms);
 
   useEffect(() => {
-    const getRooms = async () => {
-      setLoading(true);
-      const placeRooms = await fetchingRoomByLocationOrType(placeType);
-      setRoomsByPlaceType(placeRooms);
-      setLoading(false);
-      console.log(placeRooms);
-    };
-    getRooms();
-  }, [placeType]);
-
-  useEffect(() => {
-    const getRooms = async () => {
-      setLoading(true);
-      const locRooms = await fetchingRoomByLocationOrType(loc);
-      setRoomsByLoc(locRooms);
-      setLoading(false);
-      console.log(locRooms);
-    };
-    getRooms();
-  }, [loc]);
-  useEffect(() => {
-    const fetchHeader = async () => {
-      const hdrRm = await fetchingFeaturedRooms();
-      setHeaderRm(hdrRm);
-    };
-    fetchHeader();
-  }, []);
+    dispatch({ type: GET_ROOMS, placeType, propertyType, area: loc });
+  }, [placeType, loc, propertyType]);
 
   const selectData = [
     {
@@ -104,7 +70,7 @@ export default function Home() {
         <Loader />
       ) : (
         <div>
-          <Header divs={headerRm} />
+          <Header divs={featuredRooms} />
           {selectData.map((dta) => (
             <div key={dta.label} className="my-[200px]">
               <SliderDiv

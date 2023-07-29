@@ -1,11 +1,8 @@
-import { useContext } from "react";
 import Slider from "react-slick";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import Cards from "./card.js";
-import { TravelHomeContext } from "../context/TravelHomeContext.js";
 
 export default function SliderComponent({ divs }) {
-  const { weiToEth } = useContext(TravelHomeContext);
   const styles = {
     icondiv:
       "transition-all my-10 ease-in h-[50px]  w-[50px] cursor-pointer hover:!bg-black hover:!text-white text-black my-5 rounded-full border-[2px] border-black",
@@ -82,14 +79,14 @@ export default function SliderComponent({ divs }) {
       <Slider {...settings}>
         {divs &&
           divs.map((b) => (
-            <div key={b.uid}>
+            <div key={b.id}>
               <Cards
                 img={b.img}
                 title={b.name}
-                price={weiToEth(b.price)}
+                price={b.price}
                 location={b.location}
                 description={b.description}
-                id={b.uid}
+                id={b.id}
               />
             </div>
           ))}

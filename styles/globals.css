@@ -1,8 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Sora&display=optional");
+@import url("https://fonts.googleapis.com/css2?family=Sora&display=swap");
 
 body {
-	font-family: sora;
+  font-family: Sora;
 }

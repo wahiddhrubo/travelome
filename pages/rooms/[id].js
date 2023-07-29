@@ -13,270 +13,219 @@ import UserBio from "../../components/userBio.js";
 import HashLoader from "react-spinners/HashLoader";
 import SubmitButton from "../../components/button.js";
 import moment from "moment";
-import { TravelHomeContext } from "../../context/TravelHomeContext.js";
 import { owner, primaryColor } from "../../lib/constants.js";
 import { checkEmptyField } from "../../components/formvalidation.js";
-import Loader from "../../components/loader.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleRoom, getUser } from "../../store/selectors.js";
+import { BOOK_ROOM, GET_SINGLE_ROOMS } from "../../store/saga/actions.js";
 
 export default function Addroom(props) {
-	const router = useRouter();
+  const router = useRouter();
 
-	const { id } = router.query;
-	const {
-		weiToEth,
-		currentAccount,
-		BookRoom,
-		fetchingRoom,
-		fetchBlockedDates,
-		fetchUserByAcc,
-		getUserByAcc,
-	} = useContext(TravelHomeContext);
-	const [blockedDates, setBlockedDates] = useState();
-	const [dates, setDates] = useState({ startDate: null, endDate: null });
-	const [room, setRoom] = useState([]);
+  const dispatch = useDispatch();
 
-	const [startDate, setStartDate] = useState("");
-	const [endDate, setEndDate] = useState("");
-	const [error, setError] = useState("");
-	const [roomPriceByNumOfDay, setRoomPriceByNumOfDay] = useState();
-	const [numOfGuest, setNumOfGuest] = useState(1);
-	const [loading, setLoading] = useState(true);
-	const transactionFee = roomPriceByNumOfDay * 0.15;
-	const totalPrice =
-		owner == currentAccount
-			? roomPriceByNumOfDay
-			: roomPriceByNumOfDay + transactionFee;
+  const { account } = useSelector(getUser);
+  const { room } = useSelector(getSingleRoom);
 
-	const fields = [
-		{ startDate: startDate },
-		{ endDate: endDate },
-		{ numOfGuest: numOfGuest },
-	];
+  const { id } = router.query;
+  const [blockedDates, setBlockedDates] = useState();
+  const [dates, setDates] = useState({ startDate: null, endDate: null });
 
-	const getDates = (startDate, stopDate) => {
-		var dateArray = [];
-		var currentDate = moment(startDate);
-		var stopDate = moment(stopDate);
-		while (currentDate <= stopDate) {
-			dateArray.push(moment(currentDate).format("YYYY-MM-DD"));
-			currentDate = moment(currentDate).add(1, "days");
-		}
-		return dateArray;
-	};
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [error, setError] = useState("");
+  const [roomPriceByNumOfDay, setRoomPriceByNumOfDay] = useState();
+  const [numOfGuest, setNumOfGuest] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const transactionFee = roomPriceByNumOfDay * 0.15;
+  const totalPrice =
+    owner == account
+      ? roomPriceByNumOfDay
+      : roomPriceByNumOfDay + transactionFee;
 
-	const SubmitHandler = () => {
-		const maxGuest = room.map((r) => r.maxNumOfPeople);
-		if (checkEmptyField(fields)) {
-			const errorField = checkEmptyField(fields);
-			setError(`ERROR : Please Enter ${errorField.join(" ")}`);
-		} else if (numOfGuest >= maxGuest) {
-			setError("ERROR : Max Number Of Guest Exceed");
-		} else {
-			setLoading(true);
+  const fields = [
+    { startDate: startDate },
+    { endDate: endDate },
+    { numOfGuest: numOfGuest },
+  ];
 
-			console.log(numOfGuest, maxGuest);
-			const dtarr = getDates(startDate, endDate);
-			let id = room.map((r) => r.uid)[0];
-			id = parseInt(id);
-			BookRoom(dtarr, id, totalPrice);
-			setLoading(false);
-		}
-	};
+  const getDates = (startDate, stopDate) => {
+    var dateArray = [];
+    var currentDate = moment(startDate);
+    var stopDate = moment(stopDate);
+    while (currentDate <= stopDate) {
+      dateArray.push(moment(currentDate).format("YYYY-MM-DD"));
+      currentDate = moment(currentDate).add(1, "days");
+    }
+    return dateArray;
+  };
 
-	const isBlocked = (day) => {
-		if (blockedDates) {
-			return blockedDates.some((date) => day.isSame(date, "day"));
-		}
-	};
+  const SubmitHandler = () => {
+    const maxGuest = room.maxNumOfPeople;
+    if (checkEmptyField(fields)) {
+      const errorField = checkEmptyField(fields);
+      setError(`ERROR : Please Enter ${errorField.join(" ")}`);
+    } else if (parseInt(numOfGuest) >= parseInt(maxGuest)) {
+      setError("ERROR : Max Number Of Guest Exceed");
+    } else {
+      setLoading(true);
 
-	useEffect(() => {
-		const fetchRoom = async () => {
-			if (fetchingRoom(id)) {
-				setLoading(true);
-				const newRomm = await fetchingRoom(id);
+      console.log(numOfGuest, maxGuest);
+      const dtarr = getDates(startDate, endDate);
+      let id = room.id;
+      id = parseInt(id);
+      dispatch({ type: BOOK_ROOM, newDate: dtarr, id, price: totalPrice });
+      setLoading(false);
+    }
+  };
 
-				setRoom(newRomm);
+  const isBlocked = (day) => {
+    if (blockedDates) {
+      return blockedDates.some((date) => day.isSame(date, "day"));
+    }
+  };
 
-				setLoading(false);
-			}
-		};
+  useEffect(() => {
+    dispatch({ type: GET_SINGLE_ROOMS, id });
+  }, [id]);
 
-		fetchRoom();
-	}, [id]);
+  useEffect(() => {
+    const momentToDate = (date) => {
+      return date ? moment(date).format("MM/DD/YY") : null;
+    };
+    const setAllDate = () => {
+      setStartDate(momentToDate(dates.startDate));
+      setEndDate(momentToDate(dates.endDate));
+    };
+    setAllDate();
+  }, [dates]);
 
-	useEffect(() => {
-		const fetchDates = async () => {
-			const roomId = room ? room.map((r) => r.uid) : "";
+  useEffect(() => {
+    const setPrices = () => {
+      if (room) {
+        const roomprc = room.price;
+        const prc = roomprc[0] * getDates(startDate, endDate).length;
+        const datesd = getDates(startDate, endDate);
+        setRoomPriceByNumOfDay(prc);
+      }
+    };
+    setPrices();
+  }, [startDate, endDate]);
 
-			if (fetchBlockedDates(roomId)) {
-				const blocked = await fetchBlockedDates(roomId);
-				setBlockedDates(blocked);
-			}
-		};
+  console.log({ room });
 
-		fetchDates();
-	}, [room]);
+  return (
+    <div>
+      {room && (
+        <div>
+          <Head>
+            <title>{room.name}</title>
+            <meta name="description" content="Room Description" />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <div className="text-2xl mt-20 font-semibold">{room.name}</div>
+          <div className="font-medium underline mt-2 mb-2">{room.location}</div>
+          <div className="my-10 ">
+            <Gallery images={room.img} />
+          </div>
 
-	useEffect(() => {
-		const momentToDate = (date) => {
-			return date ? moment(date).format("MM/DD/YY") : null;
-		};
-		const setAllDate = () => {
-			setStartDate(momentToDate(dates.startDate));
-			setEndDate(momentToDate(dates.endDate));
-		};
-		setAllDate();
-	}, [dates]);
+          <div className="lg:flex hidden shink gap-10">
+            <div className="lg:w-3/4 text-center lg:text-left pr-5 ">
+              <Title
+                placeType={room.placeType}
+                price={room.price}
+                bedbath={room.bedbath}
+                description={room.description}
+                maxGuests={parseInt(room.maxNumOfPeople)}
+              />
+              <div className="my-10">
+                <Features feature={room.features} />
+              </div>
 
-	useEffect(() => {
-		const setPrices = () => {
-			if (room) {
-				const roomprc = room.map((r) => r.price);
-				const prc = roomprc[0] * getDates(startDate, endDate).length;
-				const datesd = getDates(startDate, endDate);
-				setRoomPriceByNumOfDay(prc);
-			}
-		};
-		setPrices();
-	}, [startDate, endDate]);
+              <RoomCalender dates={dates} setDates={setDates} />
+            </div>
+            <div className="sticky top-[10px] w-[385px] text-center mb-auto">
+              <BookingForm
+                maxNumOfPeople={parseInt(room.maxNumOfPeople)}
+                dates={dates}
+                setDates={setDates}
+                isDayBlocked={isBlocked}
+                roomPriceByNumOfDay={roomPriceByNumOfDay}
+                transactionFee={transactionFee}
+                setNumOfGuest={setNumOfGuest}
+                numOfGuest={numOfGuest}
+              />
+              {roomPriceByNumOfDay ? (
+                <Prices
+                  roomPriceByNumOfDay={roomPriceByNumOfDay}
+                  transactionFee={transactionFee}
+                  totalPrice={totalPrice}
+                  account={account}
+                />
+              ) : (
+                ""
+              )}
+              <div className="text-red-600 text-lg font-semibold my-3">
+                {error ? error : ""}
+              </div>
 
-	return (
-		<div>
-			{loading ? (
-				<Loader />
-			) : room.length >= 1 ? (
-				room.map((r) => (
-					<div key={r.uid}>
-						<Head>
-							<title>{r.name}</title>
-							<meta
-								name="description"
-								content="Room Description"
-							/>
-							<link rel="icon" href="/favicon.ico" />
-						</Head>
-						<div className="text-2xl mt-20 font-semibold">
-							{r.name}
-						</div>
-						<div className="font-medium underline mt-2 mb-2">
-							{r.location}
-						</div>
-						<div className="my-10 ">
-							<Gallery images={r.img} />
-						</div>
+              <SubmitButton
+                className=" my-5"
+                type="SubmitButton"
+                onClick={SubmitHandler}
+                text="Book Now"
+              />
+            </div>
+          </div>
+          <div className=" lg:hidden">
+            <div className="w-full text-center px-2 ">
+              <Title
+                placeType={room.placeType}
+                price={room.price}
+                bedbath={room.bedbath}
+                description={room.description}
+                maxGuests={parseInt(room.maxNumOfPeople)}
+              />
+              <div className="my-10">
+                <Features feature={room.features} />
+              </div>
+              <RoomCalender dates={dates} setDates={setDates} />
+            </div>
+            <div className=" w-[325px]  text-center mb-8">
+              <BookingForm
+                maxNumOfPeople={parseInt(room.maxNumOfPeople)}
+                dates={dates}
+                setDates={setDates}
+                isDayBlocked={isBlocked}
+                roomPriceByNumOfDay={roomPriceByNumOfDay}
+                transactionFee={transactionFee}
+                setNumOfGuest={setNumOfGuest}
+                numOfGuest={numOfGuest}
+              />
+              {roomPriceByNumOfDay ? (
+                <Prices
+                  roomPriceByNumOfDay={roomPriceByNumOfDay}
+                  transactionFee={transactionFee}
+                  totalPrice={totalPrice}
+                  account={account}
+                />
+              ) : (
+                ""
+              )}
+              <div className="text-red-600 text-lg font-semibold my-3">
+                {error ? error : ""}
+              </div>
 
-						<div className="lg:flex hidden shink gap-10">
-							<div className="lg:w-3/4 text-center lg:text-left pr-5 ">
-								<Title
-									placeType={r.placeType}
-									price={r.price}
-									bedbath={r.bedbath}
-									description={r.description}
-									maxGuests={parseInt(r.maxNumOfPeople)}
-								/>
-								<div className="my-10">
-									<Features feature={r.features} />
-								</div>
-
-								<RoomCalender
-									dates={dates}
-									setDates={setDates}
-									isDayBlocked={isBlocked}
-								/>
-							</div>
-							<div className="sticky top-[10px] w-[385px] text-center mb-auto">
-								<BookingForm
-									maxNumOfPeople={parseInt(r.maxNumOfPeople)}
-									dates={dates}
-									setDates={setDates}
-									isDayBlocked={isBlocked}
-									roomPriceByNumOfDay={roomPriceByNumOfDay}
-									transactionFee={transactionFee}
-									setNumOfGuest={setNumOfGuest}
-									numOfGuest={numOfGuest}
-								/>
-								{roomPriceByNumOfDay ? (
-									<Prices
-										roomPriceByNumOfDay={
-											roomPriceByNumOfDay
-										}
-										transactionFee={transactionFee}
-										totalPrice={totalPrice}
-										account={currentAccount}
-									/>
-								) : (
-									""
-								)}
-								<div className="text-red-600 text-lg font-semibold my-3">
-									{error ? error : ""}
-								</div>
-
-								<SubmitButton
-									className=" my-5"
-									type="SubmitButton"
-									onClick={SubmitHandler}
-									text="Book Now"
-								/>
-							</div>
-						</div>
-						<div className=" lg:hidden">
-							<div className="w-full text-center px-2 ">
-								<Title
-									placeType={r.placeType}
-									price={r.price}
-									bedbath={r.bedbath}
-									description={r.description}
-									maxGuests={parseInt(r.maxNumOfPeople)}
-								/>
-								<div className="my-10">
-									<Features feature={r.features} />
-								</div>
-								<RoomCalender
-									dates={dates}
-									setDates={setDates}
-									isDayBlocked={isBlocked}
-								/>
-							</div>
-							<div className=" w-[325px]  text-center mb-8">
-								<BookingForm
-									maxNumOfPeople={parseInt(r.maxNumOfPeople)}
-									dates={dates}
-									setDates={setDates}
-									isDayBlocked={isBlocked}
-									roomPriceByNumOfDay={roomPriceByNumOfDay}
-									transactionFee={transactionFee}
-									setNumOfGuest={setNumOfGuest}
-									numOfGuest={numOfGuest}
-								/>
-								{roomPriceByNumOfDay ? (
-									<Prices
-										roomPriceByNumOfDay={
-											roomPriceByNumOfDay
-										}
-										transactionFee={transactionFee}
-										totalPrice={totalPrice}
-										account={currentAccount}
-									/>
-								) : (
-									""
-								)}
-								<div className="text-red-600 text-lg font-semibold my-3">
-									{error ? error : ""}
-								</div>
-
-								<SubmitButton
-									className=" my-5"
-									type="SubmitButton"
-									onClick={SubmitHandler}
-									text="Book Now"
-								/>
-							</div>
-						</div>
-					</div>
-				))
-			) : (
-				<NotFound Title="room" />
-			)}
-		</div>
-	);
+              <SubmitButton
+                className=" my-5"
+                type="SubmitButton"
+                onClick={SubmitHandler}
+                text="Book Now"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
