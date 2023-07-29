@@ -1,66 +1,66 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useMoralis } from "react-moralis";
-import { useContext, useEffect, useState } from "react";
-import { TravelHomeContext } from "../../context/TravelHomeContext.js";
-import UserForm from "../../components/userform.js";
-import { primaryColor } from "../../lib/constants.js";
-import SubmitButton from "../../components/button.js";
-import {
-	checkEmptyField,
-	isValidEmail,
-} from "../../components/formvalidation.js";
+// import Head from "next/head";
+// import { useRouter } from "next/router";
+// import { useMoralis } from "react-moralis";
+// import { useContext, useEffect, useState } from "react";
+// import { TravelHomeContext } from "../../context/TravelHomeContext.js";
+// import UserForm from "../../components/userform.js";
+// import { primaryColor } from "../../lib/constants.js";
+// import SubmitButton from "../../components/button.js";
+// import {
+// 	checkEmptyField,
+// 	isValidEmail,
+// } from "../../components/formvalidation.js";
 
 export default function User() {
-	const { username, completed, completeUserProfile, isAuthenticated } =
-		useContext(TravelHomeContext);
+  // const { username, completed, completeUserProfile, isAuthenticated } =
+  // 	useContext(TravelHomeContext);
 
-	const [nickname, setNickname] = useState();
-	const [bio, setBio] = useState();
-	const [location, setLocation] = useState();
-	const [img, setImg] = useState([]);
-	const [phoneNumber, setPhoneNumber] = useState();
-	const [email, setEmail] = useState();
-	const [languages, setLanguages] = useState([]);
-	const [errors, setErrors] = useState([]);
-	const router = useRouter();
+  // const [nickname, setNickname] = useState();
+  // const [bio, setBio] = useState();
+  // const [location, setLocation] = useState();
+  // const [img, setImg] = useState([]);
+  // const [phoneNumber, setPhoneNumber] = useState();
+  // const [email, setEmail] = useState();
+  // const [languages, setLanguages] = useState([]);
+  // const [errors, setErrors] = useState([]);
+  // const router = useRouter();
 
-	const formData = [
-		{ nickname: nickname },
-		{ bio: bio },
-		{ location: location },
-		{ img: img },
-		{ phoneNumber: phoneNumber },
-		{ email: email },
-		{ languages: languages },
-	];
+  // const formData = [
+  // 	{ nickname: nickname },
+  // 	{ bio: bio },
+  // 	{ location: location },
+  // 	{ img: img },
+  // 	{ phoneNumber: phoneNumber },
+  // 	{ email: email },
+  // 	{ languages: languages },
+  // ];
 
-	const check = () => {
-		if (!checkEmptyField(formData)) {
-			if (isValidEmail(email)) {
-				completeUserProfile(
-					nickname,
-					bio,
-					location,
-					img,
-					phoneNumber,
-					email,
-					languages
-				);
-				router.push(`/user/${username}`);
-			} else {
-				setErrors((prev) => ["email"]);
-			}
-		} else {
-			const emptyField = checkEmptyField(formData);
-			setErrors(emptyField);
-		}
-	};
+  // const check = () => {
+  // 	if (!checkEmptyField(formData)) {
+  // 		if (isValidEmail(email)) {
+  // 			completeUserProfile(
+  // 				nickname,
+  // 				bio,
+  // 				location,
+  // 				img,
+  // 				phoneNumber,
+  // 				email,
+  // 				languages
+  // 			);
+  // 			router.push(`/user/${username}`);
+  // 		} else {
+  // 			setErrors((prev) => ["email"]);
+  // 		}
+  // 	} else {
+  // 		const emptyField = checkEmptyField(formData);
+  // 		setErrors(emptyField);
+  // 	}
+  // };
 
-	if (isAuthenticated) {
-		return (
-			<>
-				<Head>
+  // if (isAuthenticated) {
+  return (
+    <>
+      {/* <Head>
 					<title>Complete Profile</title>
 					<meta name="description" content="Complete Your Profile" />
 					<link rel="icon" href="/favicon.ico" />
@@ -109,8 +109,8 @@ export default function User() {
 						</div>
 						{errors}
 					</div>
-				)}
-			</>
-		);
-	}
+				)} */}
+    </>
+  );
+  // }
 }

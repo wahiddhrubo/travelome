@@ -1,8 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState, useEffect, useContext } from "react";
-import { primaryColor } from "../../../lib/constants.js";
+import { useEffect } from "react";
 import Card from "../../../components/cardlong.js";
 import Loader from "../../../components/loader.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +13,7 @@ export default function Categories() {
   const dispatch = useDispatch();
   const { roomsByLoc: rooms, loading } = useSelector(getRooms);
   useEffect(() => {
-    dispatch({ type: GET_ROOMS, location: id });
+    dispatch({ type: GET_ROOMS, area: id });
   }, [id]);
   return (
     <div>

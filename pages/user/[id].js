@@ -1,66 +1,66 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useMoralis } from "react-moralis";
-import { useEffect, useState, useContext } from "react";
-import { TravelHomeContext } from "../../context/TravelHomeContext.js";
-import Slider from "react-slick";
-import UserProfile from "../../components/userprofile.js";
-import Cards from "../../components/card.js";
-import ShortCard from "../../components/cardshort.js";
-import SliderComp from "../../components/slidercomponent.js";
-import NotFound from "../../components/notfound.js";
-import Loader from "../../components/loader.js";
+// import Head from "next/head";
+// import { useRouter } from "next/router";
+// import { useMoralis } from "react-moralis";
+// import { useEffect, useState, useContext } from "react";
+// import { TravelHomeContext } from "../../context/TravelHomeContext.js";
+// import Slider from "react-slick";
+// import UserProfile from "../../components/userprofile.js";
+// import Cards from "../../components/card.js";
+// import ShortCard from "../../components/cardshort.js";
+// import SliderComp from "../../components/slidercomponent.js";
+// import NotFound from "../../components/notfound.js";
+// import Loader from "../../components/loader.js";
 
-import SwiperCore, { EffectCoverflow, Navigation, Pagination } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
+// import SwiperCore, { EffectCoverflow, Navigation, Pagination } from "swiper";
+// import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function User() {
-	SwiperCore.use([Navigation, EffectCoverflow, Pagination]);
-	const router = useRouter();
-	const { Moralis } = useMoralis();
-	const [loading, setLoading] = useState(true);
+  // SwiperCore.use([Navigation, EffectCoverflow, Pagination]);
+  // const router = useRouter();
+  // const { Moralis } = useMoralis();
+  // const [loading, setLoading] = useState(true);
 
-	const { id } = router.query;
+  // const { id } = router.query;
 
-	const [user, setUser] = useState();
-	const [bookedRooms, setBookedRooms] = useState();
-	const [listedRooms, setListedRooms] = useState();
-	const {
-		fetchUser,
-		fetchRoomsByBooker,
-		fetchRoomsByRenter,
-		currentAccount,
-		weiToEth,
-	} = useContext(TravelHomeContext);
+  // const [user, setUser] = useState();
+  // const [bookedRooms, setBookedRooms] = useState();
+  // const [listedRooms, setListedRooms] = useState();
+  // const {
+  // 	fetchUser,
+  // 	fetchRoomsByBooker,
+  // 	fetchRoomsByRenter,
+  // 	currentAccount,
+  // 	weiToEth,
+  // } = useContext(TravelHomeContext);
 
-	useEffect(() => {
-		const getUser = async () => {
-			setLoading(true);
+  // useEffect(() => {
+  // 	const getUser = async () => {
+  // 		setLoading(true);
 
-			const userData = await fetchUser(id);
-			setUser(userData);
-			console.log(userData);
-			setLoading(false);
-		};
-		getUser();
-	}, [id]);
+  // 		const userData = await fetchUser(id);
+  // 		setUser(userData);
+  // 		console.log(userData);
+  // 		setLoading(false);
+  // 	};
+  // 	getUser();
+  // }, [id]);
 
-	useEffect(() => {
-		const fetchRooms = async () => {
-			const bookedRoomsdta = await fetchRoomsByBooker(user.ethAddress);
-			const listedRoomsdta = await fetchRoomsByRenter(user.ethAddress);
-			setBookedRooms(bookedRoomsdta);
-			setListedRooms(listedRoomsdta);
-			console.log(listedRoomsdta);
-		};
-		if (user) {
-			fetchRooms();
-		}
-	}, [user]);
+  // useEffect(() => {
+  // 	const fetchRooms = async () => {
+  // 		const bookedRoomsdta = await fetchRoomsByBooker(user.ethAddress);
+  // 		const listedRoomsdta = await fetchRoomsByRenter(user.ethAddress);
+  // 		setBookedRooms(bookedRoomsdta);
+  // 		setListedRooms(listedRoomsdta);
+  // 		console.log(listedRoomsdta);
+  // 	};
+  // 	if (user) {
+  // 		fetchRooms();
+  // 	}
+  // }, [user]);
 
-	return (
-		<div>
-			{loading ? (
+  return (
+    <div>
+      {/* {loading ? (
 				<Loader />
 			) : user ? (
 				<>
@@ -110,7 +110,7 @@ export default function User() {
 				</>
 			) : (
 				<NotFound title="user" />
-			)}
-		</div>
-	);
+			)} */}
+    </div>
+  );
 }
